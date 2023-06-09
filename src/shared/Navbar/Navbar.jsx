@@ -10,7 +10,6 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const userName = user?.displayName;
     const userPic = user?.photoURL;
-    console.log(userName, userPic);
     const handleLogOut = () => {
         logOut()
             .then(() => { })
@@ -36,14 +35,16 @@ const Navbar = () => {
                                 <Link to="/classes" className="hover:text-fuchsia-300">Classes</Link>
                             </li>
                             <div onClick={() => setIsOpen(!isOpen)}>
-                                <FaUserCircle className='text-3xl mr-2 text-white '></FaUserCircle>
+                            {user ? user.photoURL && <img className='w-10 mr-2 rounded-full' src={userPic} title={userName} alt="" /> : <FaUserCircle 
+                            title={userName} className='text-3xl mr-2 text-white '/>
+                                }
                                 {isOpen && (
                                     <div className='absolute rounded-xl shadow-md w-40 md:w-[20vw] bg-white overflow-hidden right-0 top-24 text-sm text-fuchsia-950 text-center'>
                                         <div className='flex flex-col cursor-pointer'>
                     {user ? (<>
                     
                         <Link className="py-1 px-2 rounded-lg bg-white text-fuchsia-950 font-bold mr-2" to='/dashboard'>Dashboard</Link>
-                <Link onClick={handleLogOut} className="py-1 px-2 rounded-lg bg-white text-fuchsia-950 font-bold mr-2" to='/logout'>Log Out</Link>
+                <li onClick={handleLogOut} className="py-1 px-2 rounded-lg bg-white text-fuchsia-950 font-bold mr-2">Log Out</li>
                     
                     </>) : (
                 <>

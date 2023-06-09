@@ -1,22 +1,63 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { RxEyeOpen, RxEyeClosed } from 'react-icons/rx'
 import Container from '../../shared/Container';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
+import { AuthContext } from '../../providers/AuthProvider';
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [error, setError] = useState('');
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const {signIn, googleSignIn, facebookSignIn} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const onSubmit = (data) => {
+    const { email, password } = data;
+    signIn(email, password)
+        .then(result =>{
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            reset();
+            navigate(from, {replace: true})
+        })
+        .catch(error =>{
+            console.log(error);
+            setError(error.message);
+        })
     
-    console.log('Logging in...', data);
   };
+
+  const handleGoogleSignIn = ()=>{
+    googleSignIn()
+    .then(result =>{
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        navigate(from, {replace: true})
+    })
+    .catch(error =>{
+        console.log(error);
+    })
+}
+const handlefbSignIn = ()=>{
+    facebookSignIn()
+    .then(result =>{
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        navigate(from, {replace: true})
+    })
+    .catch(error =>{
+        console.log(error);
+    })
+}
 
   return (
         <Container>
@@ -33,7 +74,7 @@ const Login = () => {
             type="email"
             id="email"
             {...register('email', { required: true })}
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-fuchsia-500"
+            className="input focus:ring focus:border-fuchsia-500"
           />
           {errors.email && <span className="text-red-500">Email is required.</span>}
         </div>
@@ -44,7 +85,7 @@ const Login = () => {
               type={passwordVisible ? 'text' : 'password'}
               id="password"
               {...register('password', { required: true })}
-              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-fuchsia-500"
+              className="input focus:ring focus:border-fuchsia-500"
             />
             <button
               type="button"
@@ -62,14 +103,15 @@ const Login = () => {
         </div>
         <button type="submit" className="w-full bg-fuchsia-950 text-white py-2 rounded-xl">Login</button>
       </form>
+      <p className='text-red-700 font-semibold'>{error}</p>
       <p className='pt-2'>
         Dont have an account? <Link to="/signup" className='text-fuchsia-950 font-semibold'>Sign Up</Link>
       </p>
       <div>
           <p className="text-center my-4">Or sign up with:</p>
           <div className="flex justify-center items-center gap-4">
-          <span className="flex items-center gap-2 text-lg cursor-pointer border-2 border-fuchsia-950 rounded-lg px-6 py-1"><FcGoogle className=""/>Google</span>
-          <span className="flex items-center gap-2 text-lg cursor-pointer border-2 border-fuchsia-950 rounded-lg px-6 py-1"><FaFacebook className="text-blue-700"/>Facebook</span>
+          <span onClick={handleGoogleSignIn} className="flex items-center gap-2 text-lg cursor-pointer border-2 border-fuchsia-950 rounded-lg px-6 py-1"><FcGoogle className=""/>Google</span>
+          <span onClick={handlefbSignIn} className="flex items-center gap-2 text-lg cursor-pointer border-2 border-fuchsia-950 rounded-lg px-6 py-1"><FaFacebook className="text-blue-700"/>Facebook</span>
           </div>
         </div>
         </div>
