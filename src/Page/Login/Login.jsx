@@ -6,6 +6,7 @@ import Container from '../../shared/Container';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import { AuthContext } from '../../providers/AuthProvider';
+import { saveUser } from '../../api/auth';
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState('');
@@ -41,6 +42,7 @@ const Login = () => {
     .then(result =>{
         const loggedUser = result.user;
         console.log(loggedUser);
+        saveUser(loggedUser)
         navigate(from, {replace: true})
     })
     .catch(error =>{
@@ -52,6 +54,7 @@ const handlefbSignIn = ()=>{
     .then(result =>{
         const loggedUser = result.user;
         console.log(loggedUser);
+        saveUser(loggedUser)
         navigate(from, {replace: true})
     })
     .catch(error =>{

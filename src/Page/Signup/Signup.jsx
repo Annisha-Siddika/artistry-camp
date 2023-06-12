@@ -9,6 +9,7 @@ import { FaFacebook } from "react-icons/fa"
 import { AuthContext } from "../../providers/AuthProvider";
 import { TbFidgetSpinner } from 'react-icons/tb'
 import { toast } from "react-hot-toast";
+import { saveUser } from "../../api/auth";
 const SignUp = () => {
     const { createUser, updateUserProfile, googleSignIn, facebookSignIn, loading, setLoading } = useContext(AuthContext);
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -46,6 +47,7 @@ const SignUp = () => {
                         updateUserProfile(name, imageUrl)
                         .then(() => {
                             toast.success('User created successfully')
+                            saveUser(result.user)
                             navigate(from, { replace: true })
                         }).catch(error => {
                             console.log(error.message);
@@ -73,10 +75,12 @@ const SignUp = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+                saveUser(loggedUser)
                 navigate(from, { replace: true })
             })
             .catch(error => {
                 console.log(error);
+                toast.error(error.message)
             })
     }
     const handlefbSignIn = () => {
@@ -84,6 +88,7 @@ const SignUp = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+                saveUser(loggedUser)
                 navigate(from, { replace: true })
             })
             .catch(error => {
@@ -93,7 +98,7 @@ const SignUp = () => {
 
     return (
         <Container>
-            <div className="flex flex-col lg:flex-row justify-center items-center w-full my-12">
+            <div className="flex flex-col lg:flex-row justify-center items-center w-full mb-12 pt-10">
                 <div className="w-full md:w-1/2">
                     <h2 className="text-4xl text-center text-fuchsia-950 font-bold mb-2">Create an Account</h2>
                     <img
@@ -102,7 +107,7 @@ const SignUp = () => {
                         className="mb-4"
                     />
                 </div>
-                <div className="w-full lg:w-1/2 bg-slate-300  p-10 rounded-lg">
+                <div className="w-full lg:w-1/2 bg-slate-300  p-6 rounded-lg">
 
                     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
                         <div className="mb-4">

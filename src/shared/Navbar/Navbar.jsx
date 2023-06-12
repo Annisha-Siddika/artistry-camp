@@ -16,7 +16,7 @@ const Navbar = () => {
             .catch(error => { console.error(error) });
     }
     return (
-        <nav className="bg-fuchsia-950">
+        <nav className="bg-fuchsia-950 opacity-90 fixed top-0 right-0 left-0 z-10">
             <Container>
                 <div className="flex items-center justify-between px-4 py-2">
                     <Link to='/' className="text-white flex flex-col justify-center items-center">
@@ -39,7 +39,7 @@ const Navbar = () => {
                             title={userName} className='text-3xl mr-2 text-white '/>
                                 }
                                 {isOpen && (
-                                    <div className='absolute rounded-xl shadow-md w-40 md:w-[20vw] bg-white overflow-hidden right-0 top-24 text-sm text-fuchsia-950 text-center'>
+                                    <div className='absolute rounded-xl shadow-md w-40 md:w-[20vw] bg-white overflow-hidden right-0 top-24 text-sm text-fuchsia-950 text-center z-10'>
                                         <div className='flex flex-col cursor-pointer'>
                     {user ? (<>
                     

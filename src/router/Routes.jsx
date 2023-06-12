@@ -3,6 +3,7 @@ import Home from "../Page/Home/Home/Home";
 import Login from "../Page/Login/Login";
 import Signup from "../Page/Signup/Signup";
 import Main from "../layout/Main";
+import DashBoard from "../layout/DashBoard";
 
 const Routes = createBrowserRouter([
     {
@@ -22,6 +23,16 @@ const Routes = createBrowserRouter([
                 element: <Signup></Signup>
             },
            
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <DashBoard/>,
+        children: [
+            {
+                path:'/dashboard/add-class',
+                element: <p>Add class form</p>
+            }
         ]
     }
     
