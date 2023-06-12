@@ -4,6 +4,7 @@ import Login from "../Page/Login/Login";
 import Signup from "../Page/Signup/Signup";
 import Main from "../layout/Main";
 import DashBoard from "../layout/DashBoard";
+import AddClass from "../Page/AddClass/AddClass";
 
 const Routes = createBrowserRouter([
     {
@@ -31,7 +32,7 @@ const Routes = createBrowserRouter([
         children: [
             {
                 path:'/dashboard/add-class',
-                element: <p>Add class form</p>
+                element: <AddClass/>
             }
         ]
     }
