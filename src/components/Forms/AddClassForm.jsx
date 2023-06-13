@@ -1,11 +1,11 @@
-import { useContext } from "react"
-import { AuthContext } from "../../providers/AuthProvider"
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
-const AddClass = () => {
+const AddClassForm = ({handleSubmit, handleImageChange, changeBtnText}) => {
     const {user} = useContext(AuthContext)
-  return (
-    <div className='w-full min-h-[calc(100vh-40px)] md:px-20 py-10 text-gray-800 rounded-xl bg-gray-50'>
-      <form>
+    return (
+        <div className='w-full min-h-[calc(100vh-40px)] md:px-20 py-10 text-gray-800 rounded-xl bg-gray-50'>
+      <form onSubmit={handleSubmit}>
       <div className='space-y-3'>
             <div className='space-y-1 text-sm'>
               <label htmlFor='className' className='block text-gray-600'>
@@ -27,14 +27,18 @@ const AddClass = () => {
                   <label>
                     <input
                       className='text-sm cursor-pointer w-36 hidden'
+                      onChange={event=>{handleImageChange(event.target.files[0])}}
                       type='file'
                       name='image'
                       id='image'
                       accept='image/*'
+                      required
                       hidden
                     />
                     <div className='bg-fuchsia-950 py-1 px-2 text-white border border-gray-300 rounded font-semibold cursor-pointer hover:bg-fuchsia-950'>
-                      Upload Image
+                      {
+                        changeBtnText
+                      }
                     </div>
                   </label>
                 </div>
@@ -103,7 +107,7 @@ const AddClass = () => {
         </button>
       </form>
     </div>
-  )
-}
+    );
+};
 
-export default AddClass
+export default AddClassForm;

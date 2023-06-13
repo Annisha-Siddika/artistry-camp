@@ -4,7 +4,9 @@ import Login from "../Page/Login/Login";
 import Signup from "../Page/Signup/Signup";
 import Main from "../layout/Main";
 import DashBoard from "../layout/DashBoard";
-import AddClass from "../Page/AddClass/AddClass";
+import PrivateRoute from "./PrivateRoute";
+import AddClass from "../Page/InstructorPages/AddClass/AddClass";
+import ManageClass from "../Page/AdminPages/ManageClass";
 
 const Routes = createBrowserRouter([
     {
@@ -28,12 +30,16 @@ const Routes = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashBoard/>,
+        element: <PrivateRoute><DashBoard/></PrivateRoute>,
         children: [
             {
                 path:'/dashboard/add-class',
                 element: <AddClass/>
-            }
+            },
+            {
+                path:'/dashboard/manage-classes',
+                element: <ManageClass/>
+            },
         ]
     }
     
