@@ -7,11 +7,10 @@ import Container from "../../shared/Container";
 import { FcGoogle } from "react-icons/fc"
 import { FaFacebook } from "react-icons/fa"
 import { AuthContext } from "../../providers/AuthProvider";
-import { TbFidgetSpinner } from 'react-icons/tb'
 import { toast } from "react-hot-toast";
 import { saveUser } from "../../api/auth";
 const SignUp = () => {
-    const { createUser, updateUserProfile, googleSignIn, facebookSignIn, loading, setLoading } = useContext(AuthContext);
+    const { createUser, updateUserProfile, googleSignIn, facebookSignIn, setLoading } = useContext(AuthContext);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,10 +41,12 @@ const SignUp = () => {
                 const imageUrl = data.data.display_url
                 createUser(email, password)
                     .then(result => {
+                        
                         console.log(result.user);
                         reset();
                         updateUserProfile(name, imageUrl)
                         .then(() => {
+                            
                             toast.success('User created successfully')
                             saveUser(result.user)
                             navigate(from, { replace: true })
@@ -79,6 +80,7 @@ const SignUp = () => {
                 navigate(from, { replace: true })
             })
             .catch(error => {
+                setLoading(false)
                 console.log(error);
                 toast.error(error.message)
             })
@@ -92,6 +94,7 @@ const SignUp = () => {
                 navigate(from, { replace: true })
             })
             .catch(error => {
+                setLoading(false)
                 console.log(error);
             })
     }
@@ -236,9 +239,9 @@ const SignUp = () => {
                             </div>
                         </div>
                         <button type="submit" className="w-full bg-fuchsia-950 text-white py-3 font-bold hover:bg-fuchsia-900 transition-colors rounded-xl">
-                            {
-                                loading ? <TbFidgetSpinner className='m-auto animate-spin' size={24} /> : "Continue"
-                            }
+                        
+                                 Continue
+                            
                         </button>
                     </form>
                     <p className="pt-2">

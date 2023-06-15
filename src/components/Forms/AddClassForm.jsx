@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const AddClassForm = ({handleSubmit, handleImageChange, changeBtnText}) => {
     const {user} = useContext(AuthContext)
@@ -105,6 +106,7 @@ const AddClassForm = ({handleSubmit, handleImageChange, changeBtnText}) => {
           className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-fuchsia-950'
         >Save & Continue
         </button>
+        <Toaster/>
       </form>
     </div>
     );

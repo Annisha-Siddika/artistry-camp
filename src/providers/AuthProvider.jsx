@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup} from 'firebase/auth';
 import app from '../firebase/firebase.config';
+import axios from 'axios';
 
 
 export const AuthContext = createContext(null);
@@ -41,7 +42,19 @@ const AuthProvider = ({children}) => {
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser);
-            setLoading(false)
+
+            if(currentUser){
+                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, {email: currentUser.email})
+                .then(data => {
+                    console.log(data.data.token)
+                    localStorage.setItem('access-token', data.data.token)
+                    setLoading(false);
+                })
+            }
+            else{
+                localStorage.removeItem('access-token')
+            }
+            
         });
 // stop observing while unmounting
         return () =>{

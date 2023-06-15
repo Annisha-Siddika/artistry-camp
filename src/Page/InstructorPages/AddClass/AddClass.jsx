@@ -4,6 +4,7 @@ import AddClassForm from "../../../components/Forms/AddClassForm"
 import { imageUpload } from "../../../api/imgUpload"
 import { AuthContext } from "../../../providers/AuthProvider"
 import { addClass } from "../../../api/classes"
+import { toast } from "react-hot-toast"
 
 const AddClass = () => {
     const [changeBtnText, setChangeBtnText] = useState('Upload Image')
@@ -21,6 +22,7 @@ const AddClass = () => {
             className,
              seats,
               price,
+              status: 'pending',
             instructor: {
                 name: user?.displayName,
                 image:user?.photoURL,
@@ -28,7 +30,10 @@ const AddClass = () => {
             }
         }
         
-        addClass(classData).then(data => console.log(data))
+        addClass(classData).then(data => {
+            console.log(data)
+            toast.success('New Class has been added successfully')
+        })
         .catch(err => console.log(err.message))
         
     }).catch(err => console.log(err.message))
