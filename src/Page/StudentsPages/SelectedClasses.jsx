@@ -1,18 +1,10 @@
-import { useEffect } from "react";
-import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { Toaster } from "react-hot-toast";
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FaHandHoldingUsd } from 'react-icons/fa'
+import useSelectedClass from "../../api/useSelectedClass";
 const SelectedClasses = () => {
-    const [selected, setSelected] = useState([]);
-
-    useEffect(()=>{
-        fetch(`${import.meta.env.VITE_API_URL}/selected`)
-        .then(res => res.json())
-        .then(data => setSelected(data))
-        .catch(err => console.log(err.message))
-    },[])
+    const [selectedClass] = useSelectedClass()
 
     const handleDelete = id => {
         console.log(id)
@@ -39,7 +31,7 @@ const SelectedClasses = () => {
           </thead>
 
           <tbody>
-            {selected.map(singleClass => (
+            {selectedClass.map(singleClass => (
               <tr key={singleClass._id}>
                 <td className="px-4 py-2 w-28">
                   <img src={singleClass.image} alt="" className="w-28 h-20 rounded-br-full border-8 border-t-0 border-l-0 border-fuchsia-950 border-double" />
