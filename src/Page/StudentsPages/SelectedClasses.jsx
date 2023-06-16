@@ -1,14 +1,39 @@
-import { Fade } from "react-awesome-reveal";
+import { JackInTheBox } from "react-awesome-reveal";
 import { Toaster } from "react-hot-toast";
 import { RiDeleteBinLine } from 'react-icons/ri'
 import { FaHandHoldingUsd } from 'react-icons/fa'
 import useSelectedClass from "../../api/useSelectedClass";
+import Swal from "sweetalert2";
 const SelectedClasses = () => {
-    const [selectedClass] = useSelectedClass()
+    const [selectedClass, refetch] = useSelectedClass()
 
-    const handleDelete = id => {
-        console.log(id)
-
+    const handleDelete = sClass => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`${import.meta.env.VITE_API_URL}/selected/${sClass._id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+            }
+        })
     }
     const handlePay = id => {
         console.log(id)
@@ -16,7 +41,7 @@ const SelectedClasses = () => {
     }
     return (
         <div className="w-full min-h-[calc(100vh-40px)] md:pl-20 pr-5 py-10 text-gray-800 rounded-xl bg-gray-50' overflow-x-auto">
-            <Fade>
+            <JackInTheBox>
         <table className="table table-zebra">
           {/* head */}
           <thead>
@@ -44,7 +69,7 @@ const SelectedClasses = () => {
                 <td>${singleClass.price}</td>
                 <td>
                     <button
-                      onClick={() => handleDelete(singleClass._id)}
+                      onClick={() => handleDelete(singleClass)}
                       className="btn-circle text-red-500 font-bold text-2xl ">
                       <RiDeleteBinLine/>
                     </button>
@@ -52,7 +77,7 @@ const SelectedClasses = () => {
                 </td>
                 <td>
                 <button
-                      onClick={() => handlePay(singleClass._id)}
+                      onClick={() => handlePay(singleClass)}
                       className="btn-circle text-green-500 font-bold text-2xl ">
                       <FaHandHoldingUsd/>
                     </button>
@@ -62,7 +87,7 @@ const SelectedClasses = () => {
             ))}
           </tbody>
         </table>
-      </Fade>
+      </JackInTheBox>
         </div>
     );
 };
