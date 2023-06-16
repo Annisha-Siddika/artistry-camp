@@ -1,18 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import useAdmin from "../../api/useAdmin";
 import { Toaster, toast } from "react-hot-toast";
 import {FcOk} from 'react-icons/fc';
 import { Fade } from "react-awesome-reveal";
-const ClassCard = ({ singleClass, classes }) => {
+const ClassCard = ({ singleClass }) => {
     
-    const [selected, setSelected] = useState([]);
-  const { user } = useContext(AuthContext);
-  const [isAdmin] = useAdmin();
+    const { user } = useContext(AuthContext);
+    const [isAdmin] = useAdmin();
 
   
-  const handleSelect = (id) => {
-    console.log(id)
+  const handleSelect = (classInfo) => {
+    const {image, className, price, seats, _id} = classInfo;
+    console.log(classInfo)
     if (!user) {
         toast.error('Please log in to select the course.')
       return;
@@ -21,21 +21,33 @@ const ClassCard = ({ singleClass, classes }) => {
     if (singleClass.seats === 0 || isAdmin) {
       return;
     }
-    console.log(classes)
-    const filtered = classes.filter(sClass => sClass._id === id)
-    setSelected(filtered)
+    const selectedClassInfo ={classId: _id, className, image, price, seats, email: user.email}
+    fetch(`${import.meta.env.VITE_API_URL}/selected`,{
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(selectedClassInfo)
 
-    toast.success('Class selected', {
-        style: {
-          border: '1px solid #1dc818',
-          padding: '16px',
-          color: '#1dc818',
-        },
-        iconTheme: {
-          primary: '#1dc818',
-          secondary: 'white',
-        },
-      });
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.insertedId){
+            toast.success('Class selected', {
+                style: {
+                  border: '1px solid #1dc818',
+                  padding: '16px',
+                  color: '#1dc818',
+                },
+                iconTheme: {
+                  primary: '#1dc818',
+                  secondary: 'white',
+                },
+              });
+        }
+    })
+
+    
   };
 
   const cardStyle = {
@@ -54,14 +66,13 @@ const ClassCard = ({ singleClass, classes }) => {
       <p>Price: ${singleClass.price}</p>
       </div>
       <button
-        onClick={()=>handleSelect(singleClass._id)}
+        onClick={()=>handleSelect(singleClass)}
         disabled={singleClass.seats === 0 || isAdmin}
         className="absolute top-2 right-2 border-2 border-fuchsia-950 btn-circle text-4xl flex items-center justify-center"
       >
          <FcOk/>
       </button>
       <Toaster position="bottom-center"/>
-      <div>{selected.length}</div>
       
     </div>
     </Fade>

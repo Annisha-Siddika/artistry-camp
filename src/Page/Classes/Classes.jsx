@@ -30,7 +30,7 @@ const Classes = () => {
         <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 my-20">
         {classes.map(singleClass => (
-          <ClassCard key={singleClass._id} singleClass={singleClass} classes={classes} />
+          <ClassCard key={singleClass._id} singleClass={singleClass} />
         ))}
         </div>
         </Container>
