@@ -10,6 +10,7 @@ import ManageUsers from "../Page/AdminPages/ManageUsers";
 import Instructors from "../Page/Instructors/Instructors";
 import Classes from "../Page/Classes/Classes";
 import AdminRoute from "./AdminRoute";
+import SelectedClasses from "../Page/StudentsPages/SelectedClasses";
 
 const Routes = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const Routes = createBrowserRouter([
             {
                 path:'/dashboard/add-class',
                 element: <AddClass/>
+            },
+            {
+                path:'/dashboard/selected-class',
+                element: <SelectedClasses/>
             },
         ]
     }
