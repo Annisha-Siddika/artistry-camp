@@ -84,7 +84,7 @@ console.log("isAdmin:", isAdmin);
                             ):(
                             <>
                                 <Link to='/dashboard/selected-class' className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <MdClass className='w-5 h-5' /><span>My Selected Classes</span></Link>
-                                <Link className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <BsBoxArrowInDownRight className='w-5 h-5' /><span>My Enrolled Classes</span></Link>
+                                <Link to='/dashboard/enrolled' className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <BsBoxArrowInDownRight className='w-5 h-5' /><span>My Enrolled Classes</span></Link>
                             </>
                             )
                     )}

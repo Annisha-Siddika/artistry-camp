@@ -87,7 +87,7 @@ const ManageClass = () => {
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-40px)] md:pl-20 pr-5 py-10 text-gray-800 rounded-xl bg-gray-50' overflow-x-auto">
+    <div className="w-full min-h-[calc(100vh-40px)] md:pl-20 pr-5 py-10 text-gray-800 rounded-xl overflow-x-auto">
       <Fade>
         <table className="table table-zebra">
           {/* head */}
