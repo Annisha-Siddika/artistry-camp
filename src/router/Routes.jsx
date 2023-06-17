@@ -14,11 +14,13 @@ import SelectedClasses from "../Page/StudentsPages/SelectedClasses";
 import Payment from "../Page/StudentsPages/pay/Payment";
 import EnrolledClasses from "../Page/StudentsPages/EnrolledClasses";
 import MyClasses from "../Page/InstructorPages/MyClasses";
+import Errorpage from "../Errorpage";
 
 const Routes = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <Errorpage/>,
         children: [
             {
                 path: '/',
