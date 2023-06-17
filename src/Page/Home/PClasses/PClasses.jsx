@@ -5,24 +5,29 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Loader from "../../../components/Loader";
 import Card from "./Card";
-import { getAllClasses } from "../../../api/classes";
 
 const PClasses = () => {
     const [classes, setClasses] = useState([]);
     const {loading, setLoading} = useContext(AuthContext)
-    useEffect(()=>{
+
+    useEffect(() => {
         setLoading(true)
-        getAllClasses()
-        .then(data =>{
-            setClasses(data)
+        fetch(`${import.meta.env.VITE_API_URL}/classes/approve`)
+        .then(res => res.json())
+        .then(data => {
+            setClasses(data);
             setLoading(false)
-        })
-        .catch(err => console.log(err))
+          })
+          .catch(err => console.log(err.message));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    }, []);
+
+    
     if (loading){
         return <Loader></Loader>
      }
+     
     return (
         <Container>
             <Banner/>
