@@ -20,7 +20,6 @@ const Sidebar = () => {
     }
     const [isAdmin] = useAdmin();
     const [isInstructor] = useInstructor();
-console.log("isAdmin:", isAdmin);
     return (
         <>
             <div className='bg-gray-100 text-gray-800 flex justify-between'>
@@ -79,7 +78,7 @@ console.log("isAdmin:", isAdmin);
                             isInstructor ? (
                             <>
                                 <Link to='/dashboard/add-class' className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <HiViewGridAdd className='w-5 h-5' /><span>Add a Class</span></Link>
-                                <Link className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <MdOutlineClass className='w-5 h-5' /><span>My Classes</span></Link>
+                                <Link to='/dashboard/myclasses' className='flex items-center gap-4 hover:bg-gray-200 p-2 mb-2'> <MdOutlineClass className='w-5 h-5' /><span>My Classes</span></Link>
                             </>
                             ):(
                             <>
