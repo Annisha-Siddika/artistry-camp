@@ -35,7 +35,7 @@ const Navbar = () => {
                                 <Link to="/classes" className="hover:text-fuchsia-300">Classes</Link>
                             </li>
                             <div onClick={() => setIsOpen(!isOpen)}>
-                            {user ? user.photoURL && <img className='w-10 mr-2 rounded-full border-2 border-white' src={userPic} title={userName} alt="" /> : <FaUserCircle 
+                            {user ? user.photoURL && <img className='w-10 h-10 mr-2 rounded-full border-2 border-white' src={userPic} title={userName} alt="" /> : <FaUserCircle 
                             title={userName} className='text-3xl mr-2 text-white '/>
                                 }
                                 {isOpen && (
