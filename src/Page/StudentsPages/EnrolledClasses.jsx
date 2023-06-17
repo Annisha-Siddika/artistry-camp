@@ -13,7 +13,7 @@ const EnrolledClasses = () => {
             <div>
                 <h2 className="text-2xl font-bold text-fuchsia-900">Hello {user.displayName}</h2>
                 <p className="text-green-600">TransactionId: </p>
-                <p>Enrolled Time: {enrolledClasses[0].date}</p>
+                <p className="text-gray-700">Enrolled Time: {enrolledClasses[0].date}</p>
                 <div className="my-4">
                     {
                        enrolledClasses[0].classInfo.map(sClass => <div
